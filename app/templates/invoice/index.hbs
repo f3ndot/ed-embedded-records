@@ -11,7 +11,7 @@
     {{else}}
       {{title}} <button {{action "edit"}}>Edit</button>
     {{/if}}
-    {{model-status}}
+    <small style="font-size: 16px">(isDirty: <strong>{{isDirty}}</strong>, isNew: <strong>{{isNew}}</strong>)</small>
     </li>
   {{/each}}
 </ul>
