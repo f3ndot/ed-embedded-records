@@ -74,7 +74,7 @@ var dependentRelationDidChange = function(record, context) {
 };
 
 // The check for whether the record is still dirty now has to account for dependent relations
-var propertyWasReset = function(record, name) {
+var propertyWasReset = function(record) {
   if (!isRecordDirty(record)) {
     record.send('rolledBack');
   }
