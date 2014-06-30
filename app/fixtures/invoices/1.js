@@ -17,7 +17,12 @@ export default function(data) {
           title: "Do something else",
           invoice_id: "1"
         }
-      ]
+      ],
+      client: {
+        id: "5",
+        first_name: "Bob",
+        last_name: "Smith"
+      }
     }
   });
 }

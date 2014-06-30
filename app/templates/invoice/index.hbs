@@ -2,15 +2,16 @@
 <button {{action 'new'}}>New</button>
 <ul>
   {{#each}}
+    <li>
     {{#if isEditing}}
-      <li>
         <form {{action update on="submit"}}>
           {{input value=title}}
           <button type="submit">Update</button>
         </form>
-      </li>
     {{else}}
-      <li>{{title}} <button {{action "edit"}}>Edit</button></li>
+      {{title}} <button {{action "edit"}}>Edit</button>
     {{/if}}
+    {{model-status}}
+    </li>
   {{/each}}
 </ul>

@@ -1,5 +1,15 @@
 <h1>Invoice</h1>
-
-{{outlet}}
+{{model-status}}
+<div style="padding: 20px">
+  <h2>Client</h2>
+  <span style="font-size: 16px">(isDirty: <strong>{{client.isDirty}}</strong>, isNew: <strong>{{client.isNew}}</strong>)</span>
+  <ul>
+    <li><label>First Name: {{input value=client.firstName placehoder="First Name"}}</label></li>
+    <li><label>Last Name: {{input value=client.lastName}}</label></li>
+  </ul>
+  <hr>
+  {{outlet}}
+</div>
+<hr>
 
 <button {{action 'save'}}>Save</button>
