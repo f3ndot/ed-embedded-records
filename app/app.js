@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
-//import dependentRelationshipSetup from './utils/dependent-relationships';
+import dependentRelationshipSetup from './utils/dependent-relationships';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
@@ -10,7 +10,7 @@ var App = Ember.Application.extend({
   Resolver: Resolver
 });
 
-//dependentRelationshipSetup();
+dependentRelationshipSetup();
 
 /* global qd */
 qd.ajax.loadFixtures('ed-embedded-records/fixtures', '/');
