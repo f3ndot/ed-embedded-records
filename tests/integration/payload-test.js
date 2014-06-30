@@ -20,7 +20,7 @@ module('Embedded Records with Ember Data', {
  */
 var dateTransform = DS.DateTransform.create();
 
-test('saving new invoice with several items', function() {
+test('saving new invoice with several items in hasMany', function() {
   /**
    When saving a model that has a hasMany relationships with EmbeddedRecordsMixin,
    hasMany relationships are serialized as objects and added to an array under plural property.
@@ -48,7 +48,7 @@ test('saving new invoice with several items', function() {
     deepEqual(data, {
       invoice: {
         create_date: dateTransform.serialize(createDate),
-        client_id: null,
+        client: null,
         lines: [{
           invoice_id: null,
           title: 'line1'
@@ -62,7 +62,7 @@ test('saving new invoice with several items', function() {
       invoice: {
         id: 1,
         create_date: dateTransform.serialize(createDate),
-        client_id: null,
+        client: null,
         lines: [
           {id: 1, title: 'line1'},
           {id: 2, title: 'line2'}
@@ -72,7 +72,7 @@ test('saving new invoice with several items', function() {
   }
 });
 
-asyncTest('loading response from the server', function(){
+asyncTest('loading response with hasMany from the server', function(){
   expect(1);
   var store = App.__container__.lookup('store:main');
   var date = new Date();
@@ -102,5 +102,42 @@ asyncTest('loading response from the server', function(){
     .finally(function(){
       start();
     });
+});
 
+asyncTest('loading response with belongsTo from the server', function(){
+  expect(1);
+
+  var store = App.__container__.lookup('store:main');
+  var date = new Date();
+
+  qd.ajax.defineFixture('/invoices/4', function(data){
+    return this.success({
+      invoice: {
+        id: 4,
+        createDate: dateTransform.serialize(date),
+        lines: [],
+        client: {
+          id: 3,
+          first_name: 'Bob',
+          last_name: 'Smith'
+        }
+      }
+    });
+  });
+
+  store.find('invoice', 4)
+    .then(function(model){
+      return model.get('client').then(function(client){
+        deepEqual(client.getProperties(['firstName', 'lastName']), {
+          firstName: 'Bob',
+          lastName: 'Smith'
+        });
+      });
+    }, function(reason){
+      Em.Logger.error(reason);
+      ok(false);
+    })
+    .finally(function(){
+      start();
+    });
 });
